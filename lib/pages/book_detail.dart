@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-// ignore: always_use_package_imports
-import '../bloc/books_bloc/books_bloc.dart';
-// ignore: always_use_package_imports
-import '../models/book_model.dart';
-// ignore: always_use_package_imports
-import '../services/api_services.dart';
+import 'package:flutter_my_app/application/books/books_bloc/books_bloc.dart';
+import 'package:flutter_my_app/models/book_model.dart';
+import 'package:flutter_my_app/services/api_services.dart';
 
 class BookDetail extends StatefulWidget {
   final Book book;
