@@ -35,124 +35,133 @@ class SingInForm extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           body: Center(
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              width: _size.width * 0.85,
-              height: _size.height * 0.40,
-              decoration: BoxDecoration(
-                border: Border.all(),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Form(
-                autovalidateMode: state.showErrorMessages
-                    ? AutovalidateMode.onUserInteraction
-                    : AutovalidateMode.disabled,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const SizedBox(height: defaultSizeBoxHeight),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.email),
-                        labelText: 'Email',
-                      ),
-                      autocorrect: false,
-                      onChanged: (value) => context.read<SingInFormBloc>().add(
-                            SingInFormEvent.emailChanged(value),
-                          ),
-                      validator: (_) => context
-                          .watch<SingInFormBloc>()
-                          .state
-                          .emailAddress
-                          .value
-                          .fold(
-                            (l) => l.maybeMap(
-                              invalidEmail: (_) => 'Invalid Email',
-                              orElse: () => null,
-                            ),
-                            (_) => null,
-                          ),
-                    ),
-                    const SizedBox(height: defaultSizeBoxHeight),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.lock),
-                        labelText: 'Password',
-                      ),
-                      autocorrect: false,
-                      obscureText: true,
-                      onChanged: (value) => context.read<SingInFormBloc>().add(
-                            SingInFormEvent.passwordChanged(value),
-                          ),
-                      validator: (_) => context
-                          .watch<SingInFormBloc>()
-                          .state
-                          .password
-                          .value
-                          .fold(
-                            (l) => l.maybeMap(
-                              shortPassword: (_) => 'Short Password',
-                              orElse: () => null,
-                            ),
-                            (_) => null,
-                          ),
-                    ),
-                    const SizedBox(height: defaultSizeBoxHeight),
-                    Row(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Image.asset('assets/img/wolox_logo_large.png'),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  width: _size.width * 0.85,
+                  height: _size.height * 0.40,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Form(
+                    autovalidateMode: state.showErrorMessages
+                        ? AutovalidateMode.onUserInteraction
+                        : AutovalidateMode.disabled,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Expanded(
-                          child: TextButton(
-                            onPressed: () {
-                              context.read<SingInFormBloc>().add(
-                                    const SingInFormEvent
-                                        .singInWithEmailAndPasswordPressed(),
-                                  );
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Center(
-                                    child: MyHomePage(title: "Books"),
-                                  ),
-                                ),
-                              );
-                            },
-                            child: const Text("Sing In"),
+                        const SizedBox(height: defaultSizeBoxHeight),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(Icons.email),
+                            labelText: 'Email',
                           ),
-                        ),
-                        Expanded(
-                          child: TextButton(
-                            onPressed: () {
+                          autocorrect: false,
+                          onChanged: (value) =>
                               context.read<SingInFormBloc>().add(
-                                    const SingInFormEvent
-                                        .registerWithEmailAndPasswordPressed(),
+                                    SingInFormEvent.emailChanged(value),
+                                  ),
+                          validator: (_) => context
+                              .watch<SingInFormBloc>()
+                              .state
+                              .emailAddress
+                              .value
+                              .fold(
+                                (l) => l.maybeMap(
+                                  invalidEmail: (_) => 'Invalid Email',
+                                  orElse: () => null,
+                                ),
+                                (_) => null,
+                              ),
+                        ),
+                        const SizedBox(height: defaultSizeBoxHeight),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(Icons.lock),
+                            labelText: 'Password',
+                          ),
+                          autocorrect: false,
+                          obscureText: true,
+                          onChanged: (value) =>
+                              context.read<SingInFormBloc>().add(
+                                    SingInFormEvent.passwordChanged(value),
+                                  ),
+                          validator: (_) => context
+                              .watch<SingInFormBloc>()
+                              .state
+                              .password
+                              .value
+                              .fold(
+                                (l) => l.maybeMap(
+                                  shortPassword: (_) => 'Short Password',
+                                  orElse: () => null,
+                                ),
+                                (_) => null,
+                              ),
+                        ),
+                        const SizedBox(height: defaultSizeBoxHeight),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextButton(
+                                onPressed: () {
+                                  context.read<SingInFormBloc>().add(
+                                        const SingInFormEvent
+                                            .singInWithEmailAndPasswordPressed(),
+                                      );
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Center(
+                                        child: MyHomePage(title: "Books"),
+                                      ),
+                                    ),
                                   );
-                            },
-                            child: const Text("Register"),
+                                },
+                                child: const Text("Sing In"),
+                              ),
+                            ),
+                            Expanded(
+                              child: TextButton(
+                                onPressed: () {
+                                  context.read<SingInFormBloc>().add(
+                                        const SingInFormEvent
+                                            .registerWithEmailAndPasswordPressed(),
+                                      );
+                                },
+                                child: const Text("Register"),
+                              ),
+                            ),
+                          ],
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            context.read<SingInFormBloc>().add(
+                                  const SingInFormEvent
+                                      .singInWithGooglePressed(),
+                                );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.lightBlue,
+                          ),
+                          child: const Text(
+                            "Sing in with Google",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        context.read<SingInFormBloc>().add(
-                              const SingInFormEvent.singInWithGooglePressed(),
-                            );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.lightBlue,
-                      ),
-                      child: const Text(
-                        "Sing in with Google",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         );
