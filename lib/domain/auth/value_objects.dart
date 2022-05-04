@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:dartz/dartz.dart';
 
 import 'package:flutter_my_app/domain/core/failures.dart';
@@ -33,22 +31,3 @@ class Password extends ValueObject<String> {
 
   const Password._(this.value);
 }
-
-// class CBook extends ValueObjects<String, Book> {
-//   @override
-//   final Either<ValueFailure<String>, Book> value;
-
-//   factory CBook(Book book) {
-//     return CBook._(_somefunction(book));
-//   }
-
-//   const CBook._(this.value);
-// }
-
-// Either<ValueFailure<String>, Book> _somefunction(Book book) {
-//   if (book.id == 1) {
-//     return right(book);
-//   } else {
-//     return left(const ValueFailure.invalidEmail(failedValue: "error"));
-//   }
-// }

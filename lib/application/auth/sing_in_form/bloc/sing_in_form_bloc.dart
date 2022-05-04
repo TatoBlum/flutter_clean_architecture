@@ -59,7 +59,7 @@ class SingInFormBloc extends Bloc<SingInFormEvent, SignInFormState> {
       state.copyWith(isSubmitting: true, authFailureOrSuccessOption: none()),
     );
     final failureOrSuccess = await _authFacade.signInWithGoogle();
-    print("failureOrSuccess : $failureOrSuccess");
+    // print("failureOrSuccess : $failureOrSuccess");
     emit(
       state.copyWith(
         isSubmitting: false,
@@ -70,7 +70,7 @@ class SingInFormBloc extends Bloc<SingInFormEvent, SignInFormState> {
 
   Future<void> _registerWithEmailAndPasswordPressed(
       RegisterWithEmailAndPasswordPressed event,
-      Emitter<SignInFormState> emit) async {
+      Emitter<SignInFormState> emit,) async {
     Either<AuthFailure, Unit>? failureOrSuccess;
 
     final isEmailValid = state.emailAddress.isValid();
@@ -87,7 +87,6 @@ class SingInFormBloc extends Bloc<SingInFormEvent, SignInFormState> {
           emailAddress: state.emailAddress, password: state.password,);
     }
 
-    // emit(state.copyWith(isSubmitting: true ,showErrorMessages: true, authFailureOrSuccessOption: failureOrSuccess == null ? none(): some(failureOrSuccess)));
     emit(
       state.copyWith(
         isSubmitting: false,

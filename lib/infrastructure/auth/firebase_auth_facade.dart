@@ -52,7 +52,7 @@ class FirebaseAuthFacade implements IAuthFacade {
         email: emailAddressString,
         password: passwordAddressString,
       );
-      return right(unit); //void Unit from dartz
+      return right(unit); 
     } on PlatformException catch (e) {
       if (e.code == 'wrong-password' || e.code == 'user-not-found') {
         return left(const AuthFailure.invalidEmailAndPasswordCombination());
@@ -66,7 +66,6 @@ class FirebaseAuthFacade implements IAuthFacade {
   Future<Either<AuthFailure, Unit>> signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
-      print("googleUser :");
 
       if (googleUser == null) {
         return left(const AuthFailure.cancelledByUser());
@@ -74,7 +73,6 @@ class FirebaseAuthFacade implements IAuthFacade {
 
       final GoogleSignInAuthentication googleAuthentication =
           await googleUser.authentication;
-      print("googleAuthentication: ");
 
       final authCredential = GoogleAuthProvider.credential(
         idToken: googleAuthentication.idToken,
@@ -87,8 +85,7 @@ class FirebaseAuthFacade implements IAuthFacade {
       //     .then((r) => right(unit));
       return right(unit);
       //PlatformException
-    } on PlatformException catch (e) {
-      print("ERROR: ${e.toString()}");
+    } on PlatformException catch (_) {
       return left(const AuthFailure.serverError());
     }
   }
