@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_my_app/application/auth/auth_bloc.dart';
 import 'package:flutter_my_app/application/books/books_collection_bloc_bloc.dart';
 import 'package:flutter_my_app/domain/book/book_model.dart';
 import 'package:flutter_my_app/presentation/books/book_detail.dart';
@@ -15,9 +16,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late BooksCollectionBlocBloc booksBloc;
+  late AuthBloc authBloc;
 
   @override
   void initState() {
+    authBloc = BlocProvider.of<AuthBloc>(context);
     booksBloc = BlocProvider.of<BooksCollectionBlocBloc>(context);
     booksBloc.add(const BooksCollectionBlocEvent.fetchBooks());
     super.initState();
@@ -34,6 +37,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () {
+                authBloc.add(const AuthEvent.signOut());
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
         title: Text(widget.title),
       ),
       body: BlocBuilder<BooksCollectionBlocBloc, BooksCollectionBlocState>(
